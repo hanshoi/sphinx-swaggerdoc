@@ -11,6 +11,7 @@ from six.moves.urllib import parse as urlparse   # Retain Py2 compatibility for 
 import requests
 from requests_file import FileAdapter
 import json
+import yaml
 
 class swaggerv2doc(nodes.Admonition, nodes.Element):
     pass
@@ -37,6 +38,9 @@ class SwaggerV2DocDirective(Directive):
 
             with open(absfn) as fd:
                 content = fd.read()
+
+            if url[-4:] in ['.yml', 'yaml']:
+                return yaml.load(content)
 
             return json.loads(content)
         else:
