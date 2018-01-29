@@ -5,13 +5,18 @@ import traceback
 from docutils.parsers.rst import Directive
 from past.builtins import basestring
 
+from sphinx.errors import SphinxError
 from sphinx.locale import _
 
 from six.moves.urllib import parse as urlparse   # Retain Py2 compatibility for urlparse
 import requests
 from requests_file import FileAdapter
 import json
-import yaml
+try:
+    import yaml
+except ImportError:
+    yaml = None
+
 
 class swaggerv2doc(nodes.Admonition, nodes.Element):
     pass
@@ -40,6 +45,13 @@ class SwaggerV2DocDirective(Directive):
                 content = fd.read()
 
             if url[-4:] in ['.yml', 'yaml']:
+                if yaml is None:
+                    raise SphinxError(
+                        'YAML support is optional. If you choose to use it '
+                        'please install this distribution with the `yaml` '
+                        'requirements extra '
+                        '(i.e. `sphinx-swaggerdoc[yaml]`). '
+                        'Or manually install PyYAML.')
                 return yaml.load(content)
 
             return json.loads(content)
