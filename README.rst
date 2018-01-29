@@ -46,6 +46,15 @@ generates the documentation for the methods contained in tags **pet** and
        pet
        store
 
+You can also use use YAML defined swagger specs. But you will need
+to install this distribution with the ``yaml`` requirements extra
+(i.e. ``sphinx-swaggerdoc[yaml]``); or manually install PyYAML.
+Note, YAML is used when the file exention is ``.yaml`` or ``.yml``.
+
+.. code:: restructuredtext
+
+    .. swaggerv2doc:: file:///PATH/swagger.yaml
+
 Note
 ====
 
