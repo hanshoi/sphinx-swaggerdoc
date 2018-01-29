@@ -196,7 +196,7 @@ class SwaggerV2DocDirective(Directive):
                 if SwaggerV2DocDirective.DEFAULT_GROUP in groups:
                     groups[SwaggerV2DocDirective.DEFAULT_GROUP].append((path, method_type, method))
                 else:
-                    for tag in method['tags']:
+                    for tag in method.get('tags', []):
                         groups.setdefault(tag, []).append((path, method_type, method))
 
         return groups
