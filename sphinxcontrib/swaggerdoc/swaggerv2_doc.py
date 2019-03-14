@@ -36,7 +36,7 @@ class SwaggerV2DocDirective(Directive):
     # this enables content in the directive
     has_content = True
 
-    def processSwaggerURL(self, url):
+    def process_swagger_url(self, url):
         parsed_url = urlparse.urlparse(url)
         if not parsed_url.scheme:  # Assume file relative to documentation
             env = self.state.document.settings.env
@@ -192,7 +192,6 @@ class SwaggerV2DocDirective(Directive):
         if parameters is not None:
             swagger_node += self.make_parameters(parameters)
 
-
         responses = method.get('responses')
         if responses is not None:
             swagger_node += self.make_responses(responses)
@@ -241,7 +240,7 @@ class SwaggerV2DocDirective(Directive):
             selected_tags = []
 
         try:
-            api_desc = self.processSwaggerURL(api_url)
+            api_desc = self.process_swagger_url(api_url)
 
             groups = self.group_tags(api_desc)
 
@@ -258,7 +257,7 @@ class SwaggerV2DocDirective(Directive):
                     entries.append(section)
 
             return entries
-        except Exception as e:
+        except Exception:
             error_message = 'Unable to process URL: %s' % api_url
             print(error_message)
             traceback.print_exc()
