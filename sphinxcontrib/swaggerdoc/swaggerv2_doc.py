@@ -190,6 +190,8 @@ class SwaggerV2DocDirective(Directive):
         for title in method_sections:
             value_name = method_sections[title]
             value = method.get(value_name)
+            if value and isinstance(value, list):
+                value = ', '.join(value)
             if value is not None:
                 bullet_list += self.create_item(title + ': \n', value)
 
