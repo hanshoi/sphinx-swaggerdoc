@@ -147,16 +147,16 @@ class SwaggerV2DocDirective(Directive):
     def make_parameters(self, parameters):
         entries = []
 
-        head = ['Name', 'Position', 'Description', 'Type']
+        head = ['Name', 'Position', 'Description', 'Type', 'Notes']
         body = []
         for param in parameters:
-            row = []
-            row.append(param.get('name', ''))
-            row.append(param.get('in', ''))
-            row.append(param.get('description', ''))
-            row.append(param.get('type', ''))
-
-            body.append(row)
+            if param.get('name') == 'body' and 'schema' in param:
+                for name, prop_dict in param['schema'].get('properties', {}).items():
+                    prop_dict['name'] = name
+                    prop_dict['in'] = 'body'
+                    body.append(self._make_param_row(prop_dict))
+            else:
+                body.append(self._make_param_row(param))
 
         table = self.create_table(head, body)
 
@@ -167,6 +167,15 @@ class SwaggerV2DocDirective(Directive):
         entries.append(table)
 
         return entries
+
+    def _make_param_row(self, param):
+        row = []
+        row.append(param.pop('name', ''))
+        row.append(param.pop('in', ''))
+        row.append(param.pop('description', ''))
+        row.append(param.pop('type', ''))
+        row.append(', '.join("{}: {}".format(k, v) for k, v in param.items()))
+        return row
 
     def make_method(self, path, method_type, method):
         swagger_node = swaggerv2doc(path)
