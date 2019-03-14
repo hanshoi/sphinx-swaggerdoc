@@ -3,19 +3,20 @@ from docutils import nodes
 
 from docutils.parsers.rst import Directive
 
-from sphinx.locale import _
-
 import requests
-import json
+
 
 class swaggerdoc(nodes.Admonition, nodes.Element):
     pass
 
+
 def visit_swaggerdoc_node(self, node):
     self.visit_admonition(node)
 
+
 def depart_swaggerdoc_node(self, node):
     self.depart_admonition(node)
+
 
 class SwaggerDocDirective(Directive):
 

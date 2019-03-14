@@ -6,7 +6,6 @@ from docutils.parsers.rst import Directive
 from past.builtins import basestring
 
 from sphinx.errors import SphinxError
-from sphinx.locale import _
 
 from six.moves.urllib import parse as urlparse   # Retain Py2 compatibility for urlparse
 import requests
@@ -21,11 +20,14 @@ except ImportError:
 class swaggerv2doc(nodes.Admonition, nodes.Element):
     pass
 
+
 def visit_swaggerv2doc_node(self, node):
     self.visit_admonition(node)
 
+
 def depart_swaggerv2doc_node(self, node):
     self.depart_admonition(node)
+
 
 class SwaggerV2DocDirective(Directive):
 

@@ -22,12 +22,12 @@ Add directive pointing to a remote Swagger api-docs
 .. code:: restructuredtext
 
     .. swaggerv2doc:: URL/swagger.json
-    
+
 or to a local file
 
 .. code:: restructuredtext
 
-    .. swaggerv2doc:: file:///PATH/swagger.json
+    .. swaggerv2doc:: PATH/swagger.json
 
 For example
 
@@ -53,7 +53,7 @@ Note, YAML is used when the file exention is ``.yaml`` or ``.yml``.
 
 .. code:: restructuredtext
 
-    .. swaggerv2doc:: file:///PATH/swagger.yaml
+    .. swaggerv2doc:: PATH/swagger.yaml
 
 Note
 ====
